@@ -24,7 +24,7 @@ It enables dynamic configuration delivery per environment (production, staging, 
 ```mermaid
 graph TB
     subgraph "Control Plane"
-        HP[HTTP Provider]
+        HP[Goma HTTP Provider]
         subgraph "Configuration Directories"
             PROD_DIR[./data/configs/production]
             STAGE_DIR[./data/configs/staging]
