@@ -228,29 +228,29 @@ func (p *HTTPProvider) Authenticate(
 	r *http.Request,
 	cfg *config.Configuration,
 ) error {
-
 	if cfg.Auth == nil {
 		return nil
 	}
-	if cfg.Auth.BasicAuth == nil {
+	// API Key authentication
+	if key := cfg.Auth.APIKey; key != "" {
+		if r.Header.Get("X-API-Key") != key {
+			return fmt.Errorf("authentication failed for config")
+		}
 		return nil
 	}
-	if cfg.Auth.APIKey != "" {
-		if r.Header.Get("X-API-Key") == cfg.Auth.APIKey {
-			return nil
-		}
+
+	// Basic Auth authentication
+	ba := cfg.Auth.BasicAuth
+	if ba == nil || ba.Username == "" {
+		return nil
 	}
 
-	if cfg.Auth.BasicAuth.Username != "" {
-		u, p, ok := r.BasicAuth()
-		if ok &&
-			u == cfg.Auth.BasicAuth.Username &&
-			p == cfg.Auth.BasicAuth.Password {
-			return nil
-		}
+	u, pass, ok := r.BasicAuth()
+	if !ok || u != ba.Username || pass != ba.Password {
+		return fmt.Errorf("authentication failed for config")
 	}
 
-	return fmt.Errorf("authentication failed for config %s", cfg.ID)
+	return nil
 }
 
 func (p *HTTPProvider) GetMetadata() map[string]string {
@@ -280,7 +280,6 @@ func (p *HTTPProvider) matchConfiguration(
 		score := 0
 		for k, v := range metadata {
 			if cfg.Metadata[k] == v {
-				logger.Info("matchConfiguration", "key", k, "v", v)
 				score++
 			}
 		}
@@ -298,6 +297,7 @@ func (p *HTTPProvider) matchConfiguration(
 	if p.defaultID != "" {
 		for _, cfg := range p.config.Configurations {
 			if cfg.ID == p.defaultID {
+				logger.Info("Config not found, fallback to default", "ID", cfg.ID)
 				return cfg
 			}
 		}
