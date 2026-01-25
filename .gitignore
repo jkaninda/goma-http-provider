@@ -1,0 +1,7 @@
+public
+.DS_Store
+/.history
+Makefile
+data
+.env
+coverage.txt
