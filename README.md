@@ -218,9 +218,9 @@ gateway:
       cacheDir: "" # Defaults to /tmp/goma/cache/config.json
       insecureSkipVerify: false
       headers:
-        X-Goma-Meta-Gateway-Id: "goma-prod-01"
-        X-Goma-Meta-Region: "goma-prod-01"
-        X-Goma-Meta-Environment: "production"
+        X-Goma-Meta-Gateway-Id: goma-prod-01
+        X-Goma-Meta-Region: eu-central-bg1
+        X-Goma-Meta-Environment: production
         Authorization: "${GOMA_PROD_AUTHORIZATION}"
         # X-API-Key: xxxxxx-xxxxx-xxxx
 ```
