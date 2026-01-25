@@ -1,25 +1,46 @@
 # Goma HTTP Provider
 
-**Goma HTTP Provider** is an HTTP server that serves **Goma Gateway** configurations from multiple directories based on **authentication** and **request metadata**.
+The **Goma HTTP Provider** is a centralized configuration service designed for **Goma Gateway** deployments. It allows multiple gateway instances to dynamically fetch their configuration over HTTP, based on **authentication** and **request metadata**.
 
-It enables dynamic configuration delivery per environment (production, staging, development, etc.) using headers and optional authentication.
+By separating configuration delivery from gateway runtime, Goma HTTP Provider makes it easy to manage **environment-specific** configurations (production, staging, development, etc.) from a single control plane.
 
-## Features
+### What It Does
 
-- Serve gateway configurations from multiple directories
-- Environment-based configuration selection using request metadata
-- Supports multiple authentication methods:
-  - API Key
-  - Basic Authentication
-  - Header-based metadata
+* Serves Goma Gateway configurations from multiple directories
+* Selects the correct configuration using request metadata (headers)
+* Supports secure access via multiple authentication mechanisms
+* Enables dynamic, environment-aware configuration delivery
+* Works seamlessly with containerized and cloud-native setups
 
-- Optional default configuration (no auth, no metadata required)
-- Docker-ready
-- OpenAPI / Swagger documentation included
+
+## Key Features
+
+* **Multi-directory configuration support**
+  Serve configurations from different directories mapped to environments.
+
+* **Metadata-based environment resolution**
+  Automatically select the appropriate configuration using request headers.
+
+* **Multiple authentication methods**
+
+  * API Key
+  * Basic Authentication
+  * Header-based metadata validation
+
+* **Optional default configuration**
+  Allow unauthenticated access when no metadata or auth is required.
+
+* **Docker-ready**
+  Easily deploy using Docker or container orchestration platforms.
+
+* **Built-in OpenAPI / Swagger documentation**
+  Explore and test the API interactively.
 
 > ⚠️ Even if authentication succeeds, **metadata must match** the configuration definition for access to be granted (unless the configuration is marked as `default`).
 
-## Architecture
+## Architecture Overview
+
+The diagram below illustrates how **Goma HTTP Provider** acts as a control plane, serving configurations to multiple **Goma Gateway** instances across different environments.
 
 ```mermaid
 graph TB
@@ -38,7 +59,7 @@ graph TB
     subgraph "Data Plane"
         subgraph "Production Environment"
             G1[Goma Gateway G1<br/>Prod<br/>region: eu-central-bg1<br/>ID: goma-prod-01]
-            G2[Goma Gateway G2<br/>Prod2<br/>region: eu-central-fsn1<br/>ID: goma-prod-02]
+            G2[Goma Gateway G2<br/>Prod<br/>region: eu-central-fsn1<br/>ID: goma-prod-02]
         end
         
         subgraph "Staging Environment"
@@ -50,20 +71,20 @@ graph TB
         end
     end
 
-    G1 -.->|Periodic Sync<br/>BasicAuth| GHP
-    G2 -.->|Periodic Sync<br/>BasicAuth| GHP
-    G3 -.->|Periodic Sync<br/>BasicAuth| GHP
-    G4 -.->|Periodic Sync<br/>ApiKey   | GHP
+    G1 -.->|Periodic Sync<br/>Basic Auth| GHP
+    G2 -.->|Periodic Sync<br/>Basic Auth| GHP
+    G3 -.->|Periodic Sync<br/>Basic Auth| GHP
+    G4 -.->|Periodic Sync<br/>API Key| GHP
 
-    GHP -.->|Routes & Middlewares Config| G1
-    GHP -.->|Routes & Middlewares Config| G2
-    GHP -.->|Routes & Middlewares Config| G3
-    GHP -.->|Routes & Middlewares Config| G4
+    GHP -.->|Routes & Middleware Config| G1
+    GHP -.->|Routes & Middleware Config| G2
+    GHP -.->|Routes & Middleware Config| G3
+    GHP -.->|Routes & Middleware Config| G4
 
-    PROD_DIR -.->|environment: production<br/>region: eu-central-bg1| G1
-    PROD_DIR -.->|environment: production<br/>region: eu-central-fsn1| G2
+    PROD_DIR -.->|environment: production<br/>region-specific| G1
+    PROD_DIR -.->|environment: production<br/>region-specific| G2
     STAGE_DIR -.->|environment: staging| G3
-    DEV_DIR -.->|environment: dev<br/>No Auth Required| G4
+    DEV_DIR -.->|environment: development<br/>No Auth Required| G4
 
     style GHP fill:#e1f5ff
     style G1 fill:#ffebee
@@ -74,15 +95,17 @@ graph TB
     style STAGE_DIR fill:#ffe0b2
     style DEV_DIR fill:#c8e6c9
 ```
----
 
-## Supported Authentication
 
-- **API Key**
-- **Basic Auth**
-- **Request Metadata Headers**
+## Supported Authentication Methods
 
----
+Goma HTTP Provider supports flexible access control using one or more of the following:
+
+* **API Key**
+* **Basic Authentication**
+* **Request metadata headers**
+
+Authentication and metadata checks can be combined to ensure that only authorized gateways can retrieve the correct configuration for their environment.
 
 ## Links
 
@@ -90,7 +113,7 @@ graph TB
 - **Source Code**: [goma-http-provider](https://github.com/jkaninda/goma-http-provider)
 - **Docker Image**: [jkaninda/goma-http-provider](https://hub.docker.com/r/jkaninda/goma-http-provider)
 
----
+
 
 ## Metadata Handling
 
