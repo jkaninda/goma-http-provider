@@ -213,12 +213,13 @@ gateway:
       endpoint: "https://config.example.com/api/v1/config"
       interval: 60s
       timeout: 10s
-      retryAttempts: 3
-      retryDelay: 2s
+      retryAttempts: 5
+      retryDelay: 3s
       cacheDir: "" # Defaults to /tmp/goma/cache/config.json
       insecureSkipVerify: false
       headers:
         X-Goma-Meta-Gateway-Id: "goma-prod-01"
+        X-Goma-Meta-Region: "goma-prod-01"
         X-Goma-Meta-Environment: "production"
         Authorization: "${GOMA_PROD_AUTHORIZATION}"
         # X-API-Key: xxxxxx-xxxxx-xxxx
