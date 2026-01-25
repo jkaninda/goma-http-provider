@@ -19,6 +19,61 @@ It enables dynamic configuration delivery per environment (production, staging, 
 
 > ⚠️ Even if authentication succeeds, **metadata must match** the configuration definition for access to be granted (unless the configuration is marked as `default`).
 
+## Architecture
+
+```mermaid
+graph TB
+    subgraph "Control Plane"
+        HP[HTTP Provider]
+        subgraph "Configuration Directories"
+            PROD_DIR[./data/configs/production]
+            STAGE_DIR[./data/configs/staging]
+            DEV_DIR[./data/configs/development]
+        end
+        HP --> PROD_DIR
+        HP --> STAGE_DIR
+        HP --> DEV_DIR
+    end
+
+    subgraph "Data Plane"
+        subgraph "Production Environment"
+            G1[Goma Gateway G1<br/>Prod<br/>region: eu-central-bg1<br/>ID: goma-prod-01]
+            G2[Goma Gateway G2<br/>Prod2<br/>region: eu-central-fsn1<br/>ID: goma-prod-02]
+        end
+        
+        subgraph "Staging Environment"
+            G3[Goma Gateway G3<br/>Stage<br/>region: eu-central-fsn1<br/>ID: goma-stage-01]
+        end
+        
+        subgraph "Development Environment"
+            G4[Goma Gateway G4<br/>Dev<br/>region: eu-central-fsn1<br/>ID: goma-dev-01]
+        end
+    end
+
+    G1 -.->|Periodic Sync<br/>BasicAuth| HP
+    G2 -.->|Periodic Sync<br/>BasicAuth| HP
+    G3 -.->|Periodic Sync<br/>BasicAuth| HP
+    G4 -.->|Periodic Sync<br/>ApiKey| HP
+
+    HP -.->|Routes & Middlewares Config| G1
+    HP -.->|Routes & Middlewares Config| G2
+    HP -.->|Routes & Middlewares Config| G3
+    HP -.->|Routes & Middlewares Config| G4
+
+    PROD_DIR -.->|environment: production<br/>region: eu-central-bg1| G1
+    PROD_DIR -.->|environment: production<br/>region: eu-central-fsn1| G2
+    STAGE_DIR -.->|environment: staging| G3
+    DEV_DIR -.->|environment: dev<br/>No Auth Required| G4
+
+    style HP fill:#e1f5ff
+    style G1 fill:#ffebee
+    style G2 fill:#ffebee
+    style G3 fill:#fff3e0
+    style G4 fill:#e8f5e9
+    style PROD_DIR fill:#ffcdd2
+    style STAGE_DIR fill:#ffe0b2
+    style DEV_DIR fill:#c8e6c9
+```
 ---
 
 ## Supported Authentication
