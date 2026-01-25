@@ -24,15 +24,15 @@ It enables dynamic configuration delivery per environment (production, staging, 
 ```mermaid
 graph TB
     subgraph "Control Plane"
-        HP[Goma HTTP Provider]
+        GHP[Goma HTTP Provider]
         subgraph "Configuration Directories"
             PROD_DIR[./data/configs/production]
             STAGE_DIR[./data/configs/staging]
             DEV_DIR[./data/configs/development]
         end
-        HP --> PROD_DIR
-        HP --> STAGE_DIR
-        HP --> DEV_DIR
+        GHP --> PROD_DIR
+        GHP --> STAGE_DIR
+        GHP --> DEV_DIR
     end
 
     subgraph "Data Plane"
@@ -50,22 +50,22 @@ graph TB
         end
     end
 
-    G1 -.->|Periodic Sync<br/>BasicAuth| HP
-    G2 -.->|Periodic Sync<br/>BasicAuth| HP
-    G3 -.->|Periodic Sync<br/>BasicAuth| HP
-    G4 -.->|Periodic Sync<br/>ApiKey| HP
+    G1 -.->|Periodic Sync<br/>BasicAuth| GHP
+    G2 -.->|Periodic Sync<br/>BasicAuth| GHP
+    G3 -.->|Periodic Sync<br/>BasicAuth| GHP
+    G4 -.->|Periodic Sync<br/>ApiKey   | GHP
 
-    HP -.->|Routes & Middlewares Config| G1
-    HP -.->|Routes & Middlewares Config| G2
-    HP -.->|Routes & Middlewares Config| G3
-    HP -.->|Routes & Middlewares Config| G4
+    GHP -.->|Routes & Middlewares Config| G1
+    GHP -.->|Routes & Middlewares Config| G2
+    GHP -.->|Routes & Middlewares Config| G3
+    GHP -.->|Routes & Middlewares Config| G4
 
     PROD_DIR -.->|environment: production<br/>region: eu-central-bg1| G1
     PROD_DIR -.->|environment: production<br/>region: eu-central-fsn1| G2
     STAGE_DIR -.->|environment: staging| G3
     DEV_DIR -.->|environment: dev<br/>No Auth Required| G4
 
-    style HP fill:#e1f5ff
+    style GHP fill:#e1f5ff
     style G1 fill:#ffebee
     style G2 fill:#ffebee
     style G3 fill:#fff3e0
