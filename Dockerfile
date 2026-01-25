@@ -28,8 +28,6 @@ RUN apk --update --no-cache add tzdata ca-certificates curl
 COPY --from=build /app/goma /usr/local/bin/goma
 RUN chmod a+x /usr/local/bin/goma && ln -s /usr/local/bin/goma /goma
 
-## Copy data directory
-COPY data /app/data
 # Set working directory
 WORKDIR /app
 # Expose HTTP Port
