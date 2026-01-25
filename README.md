@@ -167,6 +167,8 @@ If one of the values is missing, the server falls back to **HTTP**.
 
 ### API Documentation
 
+The OpenAPI specification is automatically generated from the application configuration.
+
 Swagger UI is enabled by default. To disable it:
 
 ```sh
