@@ -41,7 +41,7 @@ func (r *Route) RegisterRoutes() {
 
 }
 
-// bookRoutes returns the route definitions for the ProviderService
+// providerRoutes returns the route definitions for the ProviderService
 func (r *Route) providerRoutes() []okapi.RouteDefinition {
 	cfgGroup := r.group.Group("/config").WithTags([]string{"provider-config"})
 
