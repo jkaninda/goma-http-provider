@@ -5,7 +5,7 @@ The **Goma HTTP Provider** is a centralized configuration service designed for *
 By separating configuration delivery from gateway runtime, Goma HTTP Provider makes it easy to manage **environment-specific** configurations (production, staging, development, etc.) from a single control plane.
 
 [![Test](https://github.com/jkaninda/goma-http-provider/actions/workflows/test.yml/badge.svg)](https://github.com/jkaninda/goma-http-provider/actions/workflows/tests.yml)
-[![Build](https://github.com/jkaninda/goma-http-provider/actions/workflows/release.yaml/badge.svg)](https://github.com/jkaninda/pg-bkup/actions/workflows/release.yaml)
+[![Build](https://github.com/jkaninda/goma-http-provider/actions/workflows/release.yaml/badge.svg)](https://github.com/jkaninda/goma-http-provider/actions/workflows/release.yaml)
 [![Go Report](https://goreportcard.com/badge/github.com/jkaninda/goma-http-provider)](https://goreportcard.com/report/github.com/jkaninda/goma-http-provider)
 ![Docker Image Size (latest by date)](https://img.shields.io/docker/image-size/jkaninda/goma-http-provider?style=flat-square)
 ![Docker Pulls](https://img.shields.io/docker/pulls/jkaninda/goma-http-provider?style=flat-square)
