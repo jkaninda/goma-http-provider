@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/jkaninda/goma-http-provider/config"
-	"github.com/jkaninda/goma-http-provider/provider"
-	"github.com/jkaninda/goma-http-provider/services"
+	"github.com/jkaninda/goma-http-provider/internal/config"
+	"github.com/jkaninda/goma-http-provider/internal/provider"
+	"github.com/jkaninda/goma-http-provider/internal/services"
 	"github.com/jkaninda/goma-http-provider/utils"
 	"github.com/jkaninda/okapi"
 )

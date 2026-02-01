@@ -13,8 +13,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/jkaninda/goma-http-provider/config"
-	"github.com/jkaninda/goma-http-provider/models"
+	"github.com/jkaninda/goma-http-provider/internal/config"
+	"github.com/jkaninda/goma-http-provider/internal/models"
 	"github.com/jkaninda/logger"
 	"gopkg.in/yaml.v3"
 )

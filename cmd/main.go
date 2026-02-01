@@ -1,9 +1,9 @@
 package main
 
 import (
-	"github.com/jkaninda/goma-http-provider/config"
-	"github.com/jkaninda/goma-http-provider/provider"
-	"github.com/jkaninda/goma-http-provider/routes"
+	"github.com/jkaninda/goma-http-provider/internal/config"
+	"github.com/jkaninda/goma-http-provider/internal/provider"
+	"github.com/jkaninda/goma-http-provider/internal/routes"
 	"github.com/jkaninda/logger"
 	"github.com/jkaninda/okapi"
 	"github.com/jkaninda/okapi/okapicli"
