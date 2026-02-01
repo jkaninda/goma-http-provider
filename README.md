@@ -218,7 +218,7 @@ go run . --config data/config.yaml
 - Override port:
 
   ```sh
-  go run . --config data/config.yaml --port 9000
+  go run cmd/main.go --config data/config.yaml --port 9000
   ```
 
 ### Available Endpoints
