@@ -209,7 +209,7 @@ cd goma-http-provider
 go mod tidy
 
 # Run the application
-go run . --config data/config.yaml
+go run cmd/main.go --config data/config.yaml
 ```
 
 ### Configuration
