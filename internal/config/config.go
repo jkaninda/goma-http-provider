@@ -6,7 +6,7 @@ import (
 	"time"
 
 	goutils "github.com/jkaninda/go-utils"
-	"github.com/jkaninda/goma-http-provider/models"
+	"github.com/jkaninda/goma-http-provider/internal/models"
 	"github.com/jkaninda/goma-http-provider/utils"
 	"github.com/jkaninda/logger"
 	"github.com/jkaninda/okapi"

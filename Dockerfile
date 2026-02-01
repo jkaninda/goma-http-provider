@@ -12,7 +12,7 @@ COPY . .
 RUN go mod download
 
 # Build the binary
-RUN CGO_ENABLED=0 GOOS=linux go build -o /app/goma
+RUN CGO_ENABLED=0 GOOS=linux go build -o /app/goma cmd/main.go
 
 ########################
 # Final Stage
